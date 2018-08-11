@@ -3,7 +3,6 @@ package com.example.syan.gankclient;
 import com.example.syan.gankclient.Helper.Utility;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -41,9 +40,10 @@ public class SisterAPI {
         GanDataModel model =   gson.fromJson(content, GanDataModel.class);
         ArrayList<SisterModel> sisters = new ArrayList<>();
         sisters.addAll(model.getResults());
-        return sisters;
 
-        //ArrayList<SisterModel> sisters = new ArrayList<>();
+        return model.getResults();
+
+
         /*
         ArrayList<SisterModel> sisters = new ArrayList<>();
 

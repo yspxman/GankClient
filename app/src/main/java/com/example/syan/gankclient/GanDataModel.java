@@ -1,17 +1,18 @@
 package com.example.syan.gankclient;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class GanDataModel {
     private boolean error;
 
-    private List<SisterModel> results;
+    private ArrayList<SisterModel> results;
 
-    public List<SisterModel> getResults() {
+    public ArrayList<SisterModel> getResults() {
         return results;
     }
 
-    public void setResults(List<SisterModel> results) {
+    public void setResults(ArrayList<SisterModel> results) {
         this.results = results;
     }
 
