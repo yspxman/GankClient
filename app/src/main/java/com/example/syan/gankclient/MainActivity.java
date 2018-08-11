@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                     if (curPos > 9) {
                         curPos = 0;
                     }
-                    loader.load(showImg, data.get(curPos).url);
+                    loader.load(showImg, data.get(curPos).getUrl());
                 }
                 break;
             case R.id.refresh_btn:
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
             data.addAll(sisterModels);
             page++;
             curPos = 0;
-            loader.load(showImg, data.get(curPos).url);
+            loader.load(showImg, data.get(curPos).getUrl());
             dismissDlg();
         }
 

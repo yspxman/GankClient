@@ -1,9 +1,13 @@
 package com.example.syan.gankclient;
 
 import com.example.syan.gankclient.Helper.Utility;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SisterAPI {
@@ -32,6 +36,15 @@ public class SisterAPI {
 
     public ArrayList<SisterModel> parseSister(String content) throws Exception{
 
+        Gson gson = new Gson();
+        //BaseModel s =   gson.fromJson(content, new TypeToken<ArrayList<SisterModel>>(){}.getType());
+        GanDataModel model =   gson.fromJson(content, GanDataModel.class);
+        ArrayList<SisterModel> sisters = new ArrayList<>();
+        sisters.addAll(model.getResults());
+        return sisters;
+
+        //ArrayList<SisterModel> sisters = new ArrayList<>();
+        /*
         ArrayList<SisterModel> sisters = new ArrayList<>();
 
         JSONArray array = new JSONObject(content).getJSONArray("results");
@@ -40,7 +53,7 @@ public class SisterAPI {
             JSONObject object = (JSONObject) array.get(i);
 
             SisterModel s = new SisterModel();
-            s._id = object.getString("_id");
+            s.set_id(object.getString("_id"));
             s.createAt = object.getString("createdAt");
             s.desc = object.getString("desc");
             s.publishedAt = (object.getString("publishedAt"));
@@ -50,8 +63,9 @@ public class SisterAPI {
             s.used = (object.getBoolean("used"));
             s.who = (object.getString("who"));
             sisters.add(s);
-        }
-        return sisters;
+        }*/
+
+
     }
 
 }
