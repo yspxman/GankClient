@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     private ArrayList<SisterModel> data;
     private ProgressDialog dialog;
     private AppCompatActivity activity;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     {
         showBtn = (Button)findViewById(R.id.next_btn);
         showImg = (ImageView) findViewById(R.id.imageView);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         showBtn.setOnClickListener(this);
 
         refreshBtn = findViewById(R.id.refresh_btn);
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog =  ProgressDialog.show(activity, "", "loading", true);
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         public SisterTask(int page){
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
             page++;
             curPos = 0;
             loader.load(showImg, data.get(curPos).getUrl());
-            dismissDlg();
+            progressBar.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -127,8 +130,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
         private void dismissDlg()
         {
-            if (dialog != null)
-            {
+            if (dialog != null) {
                 dialog.dismiss();
                 dialog = null;
             }

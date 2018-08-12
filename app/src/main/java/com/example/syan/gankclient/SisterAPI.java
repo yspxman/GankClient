@@ -38,9 +38,6 @@ public class SisterAPI {
         Gson gson = new Gson();
         //BaseModel s =   gson.fromJson(content, new TypeToken<ArrayList<SisterModel>>(){}.getType());
         GanDataModel model =   gson.fromJson(content, GanDataModel.class);
-        ArrayList<SisterModel> sisters = new ArrayList<>();
-        sisters.addAll(model.getResults());
-
         return model.getResults();
 
 
