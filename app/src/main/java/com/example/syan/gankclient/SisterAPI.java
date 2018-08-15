@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class SisterAPI {
     private static final String TAG = "Network";
     private static final String BASE_URL = "https://gank.io/api/data/%E7%A6%8F%E5%88%A9/";
@@ -39,30 +38,5 @@ public class SisterAPI {
         //BaseModel s =   gson.fromJson(content, new TypeToken<ArrayList<SisterModel>>(){}.getType());
         GanDataModel model =   gson.fromJson(content, GanDataModel.class);
         return model.getResults();
-
-
-        /*
-        ArrayList<SisterModel> sisters = new ArrayList<>();
-
-        JSONArray array = new JSONObject(content).getJSONArray("results");
-        for (int i=0; i< array.length(); i++){
-
-            JSONObject object = (JSONObject) array.get(i);
-
-            SisterModel s = new SisterModel();
-            s.set_id(object.getString("_id"));
-            s.createAt = object.getString("createdAt");
-            s.desc = object.getString("desc");
-            s.publishedAt = (object.getString("publishedAt"));
-            s.source = (object.getString("source"));
-            s.type = (object.getString("type"));
-            s.url = (object.getString("url"));
-            s.used = (object.getBoolean("used"));
-            s.who = (object.getString("who"));
-            sisters.add(s);
-        }*/
-
-
     }
-
 }

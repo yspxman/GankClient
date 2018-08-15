@@ -2,8 +2,10 @@ package com.example.syan.gankclient;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +13,8 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
+
+/////  https://www.jianshu.com/p/adb21180862a
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener{
 
     private Button showBtn;
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     private ProgressDialog dialog;
     private AppCompatActivity activity;
     private ProgressBar progressBar;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +61,33 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         urls.add("http://ww2.sinaimg.cn/large/c85e4a5cgw1f62hzfvzwwj20hs0qogpo.jpg");
     }
 
+    ////https://www.jianshu.com/p/adb21180862a
     private void initUI()
     {
         showBtn = (Button)findViewById(R.id.next_btn);
         showImg = (ImageView) findViewById(R.id.imageView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
         showBtn.setOnClickListener(this);
 
         refreshBtn = findViewById(R.id.refresh_btn);
         refreshBtn.setOnClickListener(this);
+
+        ///
+
+        ArrayList<View> mViewList = new ArrayList<View>();
+        LayoutInflater lf = getLayoutInflater().from(MainActivity.this);
+        View view1 = lf.inflate(R.layout.indicator1, null);
+        View view2 = lf.inflate(R.layout.indicator2, null);
+
+        mViewList.add(view1);
+        mViewList.add(view2);
+
+        viewPager.setAdapter(new ViewPagerAdatper(mViewList));
+
+
+
 
         Refresh();
     }
