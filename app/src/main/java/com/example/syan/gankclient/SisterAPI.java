@@ -1,12 +1,11 @@
 package com.example.syan.gankclient;
 
 import com.example.syan.gankclient.Helper.Utility;
+import com.example.syan.gankclient.Models.GanDataModel;
+import com.example.syan.gankclient.Models.SisterModel;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class SisterAPI {
     private static final String TAG = "Network";

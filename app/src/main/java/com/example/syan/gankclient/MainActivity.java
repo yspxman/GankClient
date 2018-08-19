@@ -5,11 +5,14 @@ import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
+import com.example.syan.gankclient.CommonPager.CommonViewPager;
+import com.example.syan.gankclient.Models.SisterModel;
 
 import java.util.ArrayList;
 
@@ -19,9 +22,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
     private Button showBtn;
     private Button refreshBtn;
-    private ImageView showImg;
     private ArrayList<String> urls;
-
     private int curPos = 0;
     private PictureLoader loader;
     private SisterAPI sisterAPI;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     private ProgressDialog dialog;
     private AppCompatActivity activity;
     private ProgressBar progressBar;
-    private ViewPager viewPager;
+    private CommonViewPager commonViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,29 +66,13 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     private void initUI()
     {
         showBtn = (Button)findViewById(R.id.next_btn);
-        showImg = (ImageView) findViewById(R.id.imageView);
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        commonViewPager = (CommonViewPager) findViewById(R.id.my_viewpager);
 
         showBtn.setOnClickListener(this);
-
         refreshBtn = findViewById(R.id.refresh_btn);
         refreshBtn.setOnClickListener(this);
-
-        ///
-
-        ArrayList<View> mViewList = new ArrayList<View>();
-        LayoutInflater lf = getLayoutInflater().from(MainActivity.this);
-        View view1 = lf.inflate(R.layout.indicator1, null);
-        View view2 = lf.inflate(R.layout.indicator2, null);
-
-        mViewList.add(view1);
-        mViewList.add(view2);
-
-        viewPager.setAdapter(new ViewPagerAdatper(mViewList));
-
-
-
 
         Refresh();
     }
@@ -102,7 +87,8 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                     if (curPos > 9) {
                         curPos = 0;
                     }
-                    loader.load(showImg, data.get(curPos).getUrl());
+                    //loader.load(showImg, data.get(curPos).getUrl());
+                    commonViewPager.next();
                 }
                 break;
             case R.id.refresh_btn:
@@ -141,8 +127,17 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
             data.addAll(sisterModels);
             page++;
             curPos = 0;
-            loader.load(showImg, data.get(curPos).getUrl());
+            //loader.load(showImg, data.get(curPos).getUrl());
             progressBar.setVisibility(View.INVISIBLE);
+
+            // set silder
+            ArrayList<String> images = new ArrayList<>();
+
+           for (int i=0; i< sisterModels.size(); i++)     {
+               images.add(sisterModels.get(i).getUrl());
+           }
+
+            commonViewPager.setImages(images);
         }
 
         @Override

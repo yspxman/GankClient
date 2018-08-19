@@ -1,6 +1,7 @@
-package com.example.syan.gankclient;
+package com.example.syan.gankclient.Models;
 
-import java.util.List;
+import com.example.syan.gankclient.Models.SisterModel;
+
 import java.util.ArrayList;
 
 public class GanDataModel {

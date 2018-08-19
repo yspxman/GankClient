@@ -1,4 +1,4 @@
-package com.example.syan.gankclient;
+package com.example.syan.gankclient.Models;
 
 public class SisterModel {
     private String _id;
