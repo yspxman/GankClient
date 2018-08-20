@@ -10,11 +10,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.example.syan.gankclient.Common.MyAppConfig;
 import com.example.syan.gankclient.CommonPager.CommonViewPager;
+import com.example.syan.gankclient.Models.Banner;
+import com.example.syan.gankclient.Models.Promotion;
+import com.example.syan.gankclient.Models.QuickBet;
 import com.example.syan.gankclient.Models.SisterModel;
+import com.example.syan.gankclient.Services.BettingService;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /////  https://www.jianshu.com/p/adb21180862a
@@ -34,6 +47,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     private ProgressBar progressBar;
     private CommonViewPager commonViewPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +56,8 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
         sisterAPI = new SisterAPI();
         loader = new PictureLoader();
+
+
         initData();
         initUI();
     }
@@ -60,6 +76,55 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         urls.add("http://ww3.sinaimg.cn/large/c85e4a5cjw1f671i8gt1rj20vy0vydsz.jpg");
         urls.add("http://ww2.sinaimg.cn/large/610dc034jw1f65f0oqodoj20qo0hntc9.jpg");
         urls.add("http://ww2.sinaimg.cn/large/c85e4a5cgw1f62hzfvzwwj20hs0qogpo.jpg");
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(MyAppConfig.BaseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        BettingService service = retrofit.create(BettingService.class);
+
+
+        Call<QuickBet> quickBetCall = service.getQuickBets();
+
+        quickBetCall.enqueue(new Callback<QuickBet>() {
+            @Override
+            public void onResponse(Call<QuickBet> call, Response<QuickBet> response) {
+
+                QuickBet bet = response.body();
+
+                Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT ).show();
+
+                // set silder
+
+                if (bet != null){
+
+                    Banner banner = bet.getBanner();
+
+                    if (banner != null){
+
+                        ArrayList<Promotion> promos = banner.getPromos();
+
+
+                        ArrayList<String> images = new ArrayList<>();
+
+                        for (int i=0; i< promos.size(); i++)     {
+                            images.add(promos.get(i).getImageUrl());
+                        }
+
+                        commonViewPager.setImages(images);
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<QuickBet> call, Throwable t) {
+
+            }
+        });
     }
 
     ////https://www.jianshu.com/p/adb21180862a
@@ -123,6 +188,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         @Override
         protected void onPostExecute(ArrayList<SisterModel> sisterModels) {
             super.onPostExecute(sisterModels);
+
+            if (sisterModels == null){
+                return;
+            }
+
             data.clear();
             data.addAll(sisterModels);
             page++;
@@ -137,7 +207,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                images.add(sisterModels.get(i).getUrl());
            }
 
-            commonViewPager.setImages(images);
+            //commonViewPager.setImages(images);
         }
 
         @Override
