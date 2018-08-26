@@ -4,15 +4,8 @@ import java.util.ArrayList;
 
 public class QuickBet {
 
-    private Banner Banner;
+    public Banner Banner;
 
-    public Banner getBanner() {
-        return Banner;
-    }
-
-    public void setBanner(Banner banner) {
-        this.Banner = banner;
-    }
 
     @Override
     public String toString() {

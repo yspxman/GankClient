@@ -100,17 +100,17 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
                 if (bet != null){
 
-                    Banner banner = bet.getBanner();
+                    Banner banner = bet.Banner;
 
                     if (banner != null){
 
-                        ArrayList<Promotion> promos = banner.getPromos();
+                        ArrayList<Promotion> promos = banner.Promos;
 
 
                         ArrayList<String> images = new ArrayList<>();
 
                         for (int i=0; i< promos.size(); i++)     {
-                            images.add(promos.get(i).getImageUrl());
+                            images.add(promos.get(i).imageUrl);
                         }
 
                         commonViewPager.setImages(images);
