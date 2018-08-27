@@ -1,6 +1,7 @@
 package com.example.syan.gankclient;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -139,6 +140,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         refreshBtn = findViewById(R.id.refresh_btn);
         refreshBtn.setOnClickListener(this);
 
+        Button quickbetBtn = (Button) findViewById(R.id.quickbet_btn);
+
+        quickbetBtn.setOnClickListener(this);
+
         Refresh();
     }
 
@@ -158,6 +163,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 break;
             case R.id.refresh_btn:
                 Refresh();
+                break;
+
+            case R.id.quickbet_btn:
+                Intent intent = new Intent(this, HomeActivity.class);
+                startActivity(intent);
                 break;
         }
     }
