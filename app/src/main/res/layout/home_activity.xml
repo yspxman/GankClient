@@ -11,21 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
     </FrameLayout>
-
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="91dp"
+        android:layout_height="1dp"
         android:alpha="0.6"
         android:background="@android:color/darker_gray" />
 
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:itemIconTint="@drawable/selector_bnv"
-        app:itemTextColor="@drawable/selector_bnv"
+        android:layout_height="55dp"
         app:menu="@menu/menu_bottom_navigation" />
 
 
