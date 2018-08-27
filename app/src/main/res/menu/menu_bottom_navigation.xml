@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/item1"
+        android:id="@+id/tab_home"
         android:icon="@drawable/home_notselected_icon"
         android:title="Home" />
     <item
-        android:id="@+id/item2"
+        android:id="@+id/tab_racing"
         android:icon="@drawable/racing_notselected_icon"
         android:title="Racing" />
     <item
-        android:id="@+id/item3"
+        android:id="@+id/tab_sports"
         android:icon="@drawable/sport_notselected_icon"
         android:title="Sports" />
     <item
-        android:id="@+id/item4"
+        android:id="@+id/tab_account"
         android:icon="@drawable/quickmulti_notselected_icon"
         android:title="Account" />
 
