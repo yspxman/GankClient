@@ -1,4 +1,4 @@
-package com.example.syan.gankclient;
+package com.example.syan.gankclient.Helper;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

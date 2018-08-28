@@ -1,4 +1,4 @@
-package com.example.syan.gankclient;
+package com.example.syan.gankclient.Services;
 
 import com.example.syan.gankclient.Helper.Utility;
 import com.example.syan.gankclient.Models.GanDataModel;
