@@ -4,32 +4,62 @@
     android:layout_height="match_parent"
     tools:context=".QuickBetFragment">
 
-
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <com.example.syan.gankclient.CommonPager.CommonViewPager
-            android:id="@+id/my_viewpager"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="90dp">
-        </com.example.syan.gankclient.CommonPager.CommonViewPager>
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/refresh_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Refresh" />
+            <com.example.syan.gankclient.CommonPager.CommonViewPager
+                android:id="@+id/my_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="90dp">
+            </com.example.syan.gankclient.CommonPager.CommonViewPager>
 
-        <Button
-            android:id="@+id/next_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Next" />
+            <Button
+                android:id="@+id/refresh_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refresh" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/next_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="Next" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_racing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/colorAccent"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/colorAccent"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"/>
+
+        </LinearLayout>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar"

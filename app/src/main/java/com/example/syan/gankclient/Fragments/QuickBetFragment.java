@@ -24,7 +24,9 @@ import com.example.syan.gankclient.Services.BettingService;
 import com.example.syan.gankclient.Services.SisterAPI;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,33 +78,30 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //activity = this;
-
-
         sisterAPI = new SisterAPI();
-        //loader = new PictureLoader();
-
-
         initData();
-        initUI();
-
     }
 
     private void initData() {
 
         data = new ArrayList<>();
 
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MyAppConfig.BaseUrl)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         BettingService service = retrofit.create(BettingService.class);
-
-
         Call<QuickBet> quickBetCall = service.getQuickBets();
 
+        // api call back
         quickBetCall.enqueue(new Callback<QuickBet>() {
             @Override
             public void onResponse(Call<QuickBet> call, Response<QuickBet> response) {
@@ -127,21 +126,13 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onFailure(Call<QuickBet> call, Throwable t)
             {
-                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    ////https://www.jianshu.com/p/adb21180862a
-    private void initUI()
-    {
-
-
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_quick_bet, container, false);
 
@@ -149,10 +140,8 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         commonViewPager = (CommonViewPager) view.findViewById(R.id.my_viewpager);
         showBtn.setOnClickListener(this);
-        //Button quickbetBtn = (Button) view.findViewById(R.id.quickbet_btn);
-        //quickbetBtn.setOnClickListener(this);
-        Refresh();
 
+        Refresh();
         return view;
     }
 

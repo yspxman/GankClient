@@ -6,6 +6,9 @@ public class QuickBet {
 
     public Banner Banner;
 
+    public ArrayList<Race> Races;
+
+    public ArrayList<Race> NextToPlay;
 
     @Override
     public String toString() {
