@@ -5,7 +5,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +50,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class QuickBetFragment extends Fragment implements View.OnClickListener{
 
     private Button showBtn;
+    private Button refreshBtn;
     private int curPos = 0;
     private SisterAPI sisterAPI;
     private int page = 1;
@@ -51,8 +58,10 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
     private ProgressDialog dialog;
     private ProgressBar progressBar;
     private CommonViewPager commonViewPager;
-
     private OnFragmentInteractionListener mListener;
+    private RecyclerView recyclerView;
+    private RecyclerView sportsRecyclerView;
+
 
     public QuickBetFragment() {
         // Required empty public constructor
@@ -79,11 +88,12 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sisterAPI = new SisterAPI();
-        initData();
+
     }
 
     private void initData() {
 
+        progressBar.setVisibility(View.VISIBLE);
         data = new ArrayList<>();
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -106,11 +116,15 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Call<QuickBet> call, Response<QuickBet> response) {
 
+                progressBar.setVisibility(View.INVISIBLE);
+
                 QuickBet bet = response.body();
                 Toast.makeText(getContext(), response.toString(), Toast.LENGTH_SHORT ).show();
 
                 // set silder
                 if (bet != null){
+
+                    // set banner
                     Banner banner = bet.Banner;
                     if (banner != null){
                         ArrayList<Promotion> promos = banner.Promos;
@@ -120,12 +134,19 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
                         }
                         commonViewPager.setImages(images);
                     }
+
+                    // set next races
+                    recyclerView.setAdapter(new NextEventAdapter(bet.Races));
+                    sportsRecyclerView.setAdapter(new NextEventAdapter(bet.NextToPlay));
+
                 }
             }
 
             @Override
             public void onFailure(Call<QuickBet> call, Throwable t)
             {
+                progressBar.setVisibility(View.INVISIBLE);
+
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
@@ -136,13 +157,33 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_quick_bet, container, false);
 
+        recyclerView = (RecyclerView)view.findViewById(R.id.list_racing);
+        sportsRecyclerView = (RecyclerView)view.findViewById(R.id.list_sports);
         showBtn = (Button)view.findViewById(R.id.next_btn);
+        refreshBtn = (Button)view.findViewById(R.id.refresh_btn);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         commonViewPager = (CommonViewPager) view.findViewById(R.id.my_viewpager);
         showBtn.setOnClickListener(this);
+        refreshBtn.setOnClickListener(this);
 
-        Refresh();
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext());
+        layoutManager1.setOrientation(OrientationHelper.VERTICAL);
+
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
+        layoutManager2.setOrientation(OrientationHelper.VERTICAL);
+
+        sportsRecyclerView.setLayoutManager(layoutManager1);
+        recyclerView.setLayoutManager(layoutManager2);
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
+
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initData();
     }
 
     @Override
@@ -195,26 +236,13 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.next_btn:
-
-                if (data != null && !data.isEmpty()) {
-                    curPos++;
-                    if (curPos > 9) {
-                        curPos = 0;
-                    }
-                    //loader.load(showImg, data.get(curPos).getUrl());
-                    commonViewPager.next();
-                }
+                commonViewPager.next();
                 break;
             case R.id.refresh_btn:
-                Refresh();
+                initData();
                 break;
 
         }
-    }
-
-    private void Refresh()
-    {
-        new SisterTask(page).execute();
     }
 
 
@@ -224,7 +252,7 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            //progressBar.setVisibility(View.VISIBLE);
         }
 
         public SisterTask(int page){
@@ -249,7 +277,7 @@ public class QuickBetFragment extends Fragment implements View.OnClickListener{
             page++;
             curPos = 0;
             //loader.load(showImg, data.get(curPos).getUrl());
-            progressBar.setVisibility(View.INVISIBLE);
+            //progressBar.setVisibility(View.INVISIBLE);
 
             // set silder
             ArrayList<String> images = new ArrayList<>();

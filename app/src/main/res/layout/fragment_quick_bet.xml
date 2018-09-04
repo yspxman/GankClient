@@ -19,6 +19,20 @@
                 android:layout_height="90dp">
             </com.example.syan.gankclient.CommonPager.CommonViewPager>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_racing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View android:layout_height="5dp"
+                android:layout_width="match_parent"
+                android:background="@color/common_google_signin_btn_text_light_disabled"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_sports"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
             <Button
                 android:id="@+id/refresh_btn"
                 android:layout_width="wrap_content"
@@ -31,32 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="Next" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list_racing"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/colorPrimary"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/colorAccent"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/colorPrimary"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/colorAccent"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/colorPrimary"/>
 
         </LinearLayout>
     </ScrollView>
