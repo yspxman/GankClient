@@ -12,15 +12,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.syan.gankclient.DI.Cloth;
+import com.example.syan.gankclient.DI.Clothes;
+import com.example.syan.gankclient.DI.DaggerMainComponent;
+import com.example.syan.gankclient.DI.MainComponent;
+import com.example.syan.gankclient.DI.MainModule;
+import com.example.syan.gankclient.DI.Shoe;
 import com.example.syan.gankclient.Fragments.AccountFragment;
 import com.example.syan.gankclient.Fragments.QuickBetFragment;
 import com.example.syan.gankclient.Fragments.RacingFragment;
 import com.example.syan.gankclient.Fragments.SportsFragment;
 
+import javax.inject.Inject;
+
 public class HomeActivity extends AppCompatActivity  implements QuickBetFragment.OnFragmentInteractionListener{
 
     private BottomNavigationView bottomNavigationView;
 
+    @Inject
+    Cloth cloth;
+
+    @Inject
+    Shoe shoe;
+
+    @Inject
+    Clothes clothes;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +52,17 @@ public class HomeActivity extends AppCompatActivity  implements QuickBetFragment
 
     private void init()
     {
+        //DaggerMainComponent build = DaggerMainComponent.builder().mainModule(new MainModule()).build();
+        MainComponent build =  DaggerMainComponent.builder().mainModule(new MainModule()).build();
+        build.inject(this);
+
+        shoe.toString();
+        cloth.toString();
+        clothes.toString();
+
         setContentView(R.layout.home_activity);
+
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
