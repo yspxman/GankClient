@@ -3,14 +3,16 @@ package com.example.syan.gankclient.DI;
 import com.example.syan.gankclient.HomeActivity;
 import com.example.syan.gankclient.MainActivity;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
-import dagger.Module;
+
 
 //https://www.jianshu.com/p/1d84ba23f4d2
 
-@Component(modules = MainModule.class, dependencies = BaseComponent.class)
-public interface MainComponent {
+@Component(modules = SecondModule.class, dependencies = BaseComponent.class)
+public interface SecondComponent {
 
-    void inject(HomeActivity homeActivity);
+    void inject(MainActivity mainActivity);
 
 }

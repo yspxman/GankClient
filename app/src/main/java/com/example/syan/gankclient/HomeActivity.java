@@ -22,21 +22,35 @@ import com.example.syan.gankclient.Fragments.AccountFragment;
 import com.example.syan.gankclient.Fragments.QuickBetFragment;
 import com.example.syan.gankclient.Fragments.RacingFragment;
 import com.example.syan.gankclient.Fragments.SportsFragment;
+import com.example.syan.gankclient.Helper.Utility;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class HomeActivity extends AppCompatActivity  implements QuickBetFragment.OnFragmentInteractionListener{
 
     private BottomNavigationView bottomNavigationView;
 
     @Inject
-    Cloth cloth;
+    @Named("red")
+    Cloth clothRed;
+
+    @Inject
+    @Named("blue")
+    Cloth clothBlue;
+
+    @Inject
+    Cloth clothBlack;
 
     @Inject
     Shoe shoe;
 
     @Inject
     Clothes clothes;
+
+    @Inject
+    Utility utility;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,13 +67,20 @@ public class HomeActivity extends AppCompatActivity  implements QuickBetFragment
     private void init()
     {
         //DaggerMainComponent build = DaggerMainComponent.builder().mainModule(new MainModule()).build();
-        MainComponent build =  DaggerMainComponent.builder().mainModule(new MainModule()).build();
+        MainComponent build =  DaggerMainComponent.builder()
+                .baseComponent(((MyApplication)getApplication()).getBaseComponent())
+                .mainModule(new MainModule()).build();
+
         build.inject(this);
 
         shoe.toString();
-        cloth.toString();
+        clothRed.toString();
+        clothBlue.toString();
         clothes.toString();
 
+        utility.toString();
+
+        //boolean result = clothBlue ==
         setContentView(R.layout.home_activity);
 
 

@@ -17,7 +17,7 @@ public class SisterAPI {
         ArrayList<SisterModel> sisters = new ArrayList<>();
 
         try{
-            String result = Utility.GetStringFromUrl(fetchUrl);
+            String result = new Utility().GetStringFromUrl(fetchUrl);
             if (result != null) {
                 sisters = parseSister(result);
             }

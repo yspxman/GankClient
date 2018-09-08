@@ -12,7 +12,7 @@ import okhttp3.Response;
 
 public  class Utility {
 
-    public static byte[] readFromStream(InputStream inputStream) throws Exception{
+    public byte[] readFromStream(InputStream inputStream) throws Exception{
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
@@ -28,12 +28,12 @@ public  class Utility {
         return results;
     }
 
-    public static String readStringFromStream(InputStream inputStream) throws Exception{
+    public  String readStringFromStream(InputStream inputStream) throws Exception{
         return new String(readFromStream(inputStream), "UTF-8");
     }
 
 
-    public static Response GetResponse(String url)
+    public  Response GetResponse(String url)
     {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
@@ -55,7 +55,7 @@ public  class Utility {
         return null;
     }
 
-    public static String GetStringFromUrl(String url) throws IOException {
+    public  String GetStringFromUrl(String url) throws IOException {
         Response response = GetResponse(url);
 
         if (response != null){
@@ -65,7 +65,7 @@ public  class Utility {
         return null;
     }
 
-    public static byte[] GetBytesFromUrl(String url) throws IOException {
+    public  byte[] GetBytesFromUrl(String url) throws IOException {
         Response response = GetResponse(url);
 
         if (response != null){

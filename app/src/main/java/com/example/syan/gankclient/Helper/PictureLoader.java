@@ -49,7 +49,7 @@ public class PictureLoader {
         @Override
         public void run() {
             try {
-                picBytes = Utility.GetBytesFromUrl(imgUrl);
+                picBytes = new Utility().GetBytesFromUrl(imgUrl);
                 handler.sendEmptyMessage(0x123);
             }
             catch (Exception e) {

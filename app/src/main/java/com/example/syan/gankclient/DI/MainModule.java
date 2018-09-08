@@ -1,5 +1,9 @@
 package com.example.syan.gankclient.DI;
 
+import com.example.syan.gankclient.Helper.Utility;
+
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -7,14 +11,38 @@ import dagger.Provides;
 public class MainModule {
 
     @Provides
-    public Cloth getCloth(){
+    @Named("blue")
+    public Cloth getBlueCloth() {
         Cloth cloth = new Cloth();
+        cloth.setColor("蓝色");
+        return cloth;
+    }
+
+
+    @Provides
+    @Named("red")
+    public Cloth getRedCloth() {
+        Cloth cloth = new Cloth();
+        cloth.setColor("红色");
         return cloth;
     }
 
     @Provides
-    public Clothes getClothes(Cloth cloth){
+    public Cloth getGeneralCloth() {
+        Cloth cloth = new Cloth();
+        cloth.setColor("black");
+        return cloth;
+    }
+
+    @Provides
+    @Named("blue")
+    public Clothes getClothes(@Named("blue") Cloth cloth){
         return new Clothes(cloth);
     }
 
+    @Provides
+    public Clothes getGeneralClothes(Cloth cloth){
+        return new Clothes(cloth);
+    }
 }
+
